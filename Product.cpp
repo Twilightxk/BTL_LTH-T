@@ -32,13 +32,23 @@ void Product::nhapThongTin() {
     cout << "Ten SP: "; 
     getline(cin, tenSp);
 
-    cout << "Gia goc: "; 
-    cin >> giaGoc;
-    cin.ignore(); 
-    while (giaGoc < 0) {
-        cout << "Gia goc phai la so duong. Vui long nhap lai: ";
-        cin >> giaGoc;
-        cin.ignore();
+    while (true) {
+        try {
+            cout << "Gia goc: ";
+            if (!(cin >> giaGoc)) {
+                throw "Loi: Gia goc phai la mot so!";
+            }
+            if (giaGoc < 0) {
+                throw "Loi: Gia goc phai la so duong!";
+            }
+            cin.ignore();
+            break;
+        } 
+        catch (const char* msg) {
+            cout << msg << " Vui long thu lai.\n";
+            cin.clear();
+            cin.ignore(10000, '\n');
+        }
     }
 }
 

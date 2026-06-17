@@ -37,8 +37,7 @@ int main() {
             case 7: manager.lietKeSanPham(); break;
             case 8: manager.lietKeDonHang(); break;
             case 9: 
-                cout << "Dang dong bo va luu du lieu... " << endl; 
-                // manager.luuFile();
+                cout << "Thank you for using our system!" << endl; 
                 break;
             default: 
                 cout << "Lua chon sai! Vui long chon tu 1 den 9." << endl;
