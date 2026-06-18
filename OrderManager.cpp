@@ -389,13 +389,14 @@ void OrderManager::suaDonHang() {
 
                 cin >> soLuong;
 
-                if (soLuong > 0) {
+                if (soLuong <= 0) {
                    
                     cout << "So luong phai lon hon 0! Vui long nhap lai." << endl;
-                    break;
 
                 }
-
+                else {
+                    break;
+                }
             }
             
             donHang->suaSoLuongSanPham(maSP, soLuong);

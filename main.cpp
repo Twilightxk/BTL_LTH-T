@@ -6,8 +6,6 @@ using namespace std;
 int main() {
     OrderManager manager;
     
-    // Tự động khôi phục dữ liệu từ tệp nhị phân khi vừa bật chương trình
-    // manager.docFile();
     
     int luaChon;
     do {
