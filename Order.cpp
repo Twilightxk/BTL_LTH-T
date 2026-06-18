@@ -18,6 +18,16 @@ void Order::themSanPhamVaoDon(OrderDetail chiTiet) {
     dsChiTiet.push_back(chiTiet);
 }
 
+//kiểm tra sp đã tồn tại trong đơn
+bool Order::coSanPham(const string& maSp) const {
+    for (const auto& ct : dsChiTiet) {
+        if (ct.getMaSp() == maSp) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Order::suaSoLuongSanPham(string maSp, int soLuong) {
     for (auto& ct : dsChiTiet) {
         if (ct.getMaSp() == maSp) {
@@ -50,9 +60,6 @@ void Order::xuatThongTin() const {
 RetailOrder::RetailOrder() : Order() {}
 RetailOrder::RetailOrder(string maDon) : Order(maDon) {}
 
-double RetailOrder::tinhTongTien() const {
-    return 0;
-}
 
 double RetailOrder::tinhTongTien(const vector<Product*>& dsSanPham) const {
     double tong = 0;
@@ -84,9 +91,6 @@ void WholesaleOrder::setMucChietKhau(double mucChietKhau) {
     this->mucChietKhau = mucChietKhau; 
 }
 
-double WholesaleOrder::tinhTongTien() const {
-    return 0;
-}
 
 double WholesaleOrder::tinhTongTien(const vector<Product*>& dsSanPham) const {
     double tong = 0;

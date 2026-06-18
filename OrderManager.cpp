@@ -133,7 +133,7 @@ void OrderManager::suaSanPham() {
 }
 
 void OrderManager::xoaSanPham() {
-    cout << "\n====XOA SAN PHAM (KIEM TRA RANG BUOC)====" << endl;
+    cout << "\n====XOA SAN PHAM====" << endl;
     cout << "Nhap ma san pham can xoa: ";
     string ma;
     cin >> ma;
@@ -176,7 +176,7 @@ void OrderManager::taoDonHang() {
     cout << "\n====TAO DON HANG MOI====" << endl;
     cout << "1. Don hang Ban Le (Retail Order)" << endl;
     cout << "2. Don hang Dai Ly/Ban Buon (Wholesale Order)" << endl;
-    cout << "Lua chon loai don hang: ";
+    
     int loai;
     while (true) {
         try {
@@ -362,11 +362,20 @@ void OrderManager::suaDonHang() {
                 cout << "Nhap so luong: ";
                 cin >> soLuong;
 
-                OrderDetail chiTiet(maSP, soLuong);
+                if (soLuong <= 0) {
 
-                donHang->themSanPhamVaoDon(chiTiet);
+                    cout << "So luong phai lon hon 0!" << endl;
 
-                cout << "Da them san pham vao don!" << endl;
+                }
+                else{
+
+                    OrderDetail chiTiet(maSP, soLuong);
+    
+                    donHang->themSanPhamVaoDon(chiTiet);
+    
+                    cout << "Da them san pham vao don!" << endl;
+                }
+
             }
 
         } 
@@ -374,8 +383,21 @@ void OrderManager::suaDonHang() {
             
             cout << "Nhap ma san pham can sua so luong: ";
             cin >> maSP;
-            cout << "Nhap so luong moi: ";
-            cin >> soLuong;
+            while (true){
+
+                cout << "Nhap so luong moi: ";
+
+                cin >> soLuong;
+
+                if (soLuong > 0) {
+                   
+                    cout << "So luong phai lon hon 0! Vui long nhap lai." << endl;
+                    break;
+
+                }
+
+            }
+            
             donHang->suaSoLuongSanPham(maSP, soLuong);
             cout << "Da cap nhat so luong!" << endl;
 
@@ -426,16 +448,12 @@ void OrderManager::xoaDonHang() {
 
 void OrderManager::lietKeSanPham() const {
     cout << "\n=================== DANH SACH SAN PHAM TRONG KHO ===================" << endl;
-    cout << left << setw(12) << "Ma SP"
-                 << setw(25) << "Ten San Pham"
-                 << setw(15) << "Gia Goc"
-                 << "Gia Ban Cuoi Cung" << endl;
-    cout << "--------------------------------------------------------------------" << endl;
+
     for (int i = 0; i < (int)dsSanPham.size(); i++) {
+
         dsSanPham[i]->xuatThongTin();
-        cout << "--------------------------------------------------------------------" << endl;
+
     }
-    cout << "====================================================================" << endl;
 }
 
 
@@ -444,31 +462,14 @@ void OrderManager::lietKeDonHang() const {
 
    
     if (dsDonHang.empty()) {
-        cout << "(Hien chua co don hang nao duoc tao)" << endl;
+        cout << "Hien chua co don hang nao duoc tao" << endl;
         return;
     }
 
+    cout << fixed << setprecision(2);
     for (int i = 0; i < (int)dsDonHang.size(); i++) {
-        Order* donHang = dsDonHang[i];
-
-        
-        donHang->xuatThongTin();
-
-       
-        cout << fixed << setprecision(2);
-        if (donHang->getTypeId() == 1) {
-           
-            RetailOrder* donBanLe = (RetailOrder*) donHang;
-            cout << "Tong tien: " << donBanLe->tinhTongTien(dsSanPham) << endl;
-
-        } 
-        else if (donHang->getTypeId() == 2) {
-          
-            WholesaleOrder* donBanBuon = (WholesaleOrder*) donHang;
-            cout << "Tong tien (sau chiet khau): " << donBanBuon->tinhTongTien(dsSanPham) << endl;
-
-        }
-
+        dsDonHang[i]->xuatThongTin();
+        cout << "Tong tien don hang: " << dsDonHang[i]->tinhTongTien(dsSanPham) << endl;
         cout << endl;
     }
 }

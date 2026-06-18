@@ -22,17 +22,19 @@ class Order{
 
         void themSanPhamVaoDon(OrderDetail chiTiet);
 
+        bool coSanPham(const string& maSp) const;  // kiểm tra sp đã có trong đơn chưa
+
         void suaSoLuongSanPham(string maSp, int soLuong);
 
         void xoaSanPhamKhoiDon(string maSp);
 
-        virtual double tinhTongTien() const = 0;
+        virtual double tinhTongTien(const vector<Product*>& dsSanPham) const = 0;
 
         virtual void xuatThongTin() const;
 
         virtual ~Order(){}
 
-        virtual int getTypeId() const = 0;
+
 
 };
 class RetailOrder : public Order{
@@ -40,14 +42,11 @@ class RetailOrder : public Order{
         RetailOrder();
 
         RetailOrder(string maDon);
-
-        double tinhTongTien() const override;
-
-        double tinhTongTien(const vector<Product*>& dsSanPham) const;
+        
+        double tinhTongTien(const vector<Product*>& dsSanPham) const override;
 
         void xuatThongTin() const override;
 
-        int getTypeId() const override { return 1; }
 
 };
 class WholesaleOrder : public Order {
@@ -62,13 +61,10 @@ class WholesaleOrder : public Order {
 
         void setMucChietKhau(double mucChietKhau);
 
-        double tinhTongTien() const override;
-
-        double tinhTongTien(const vector<Product*>& dsSanPham) const;
+        double tinhTongTien(const vector<Product*>& dsSanPham) const override;
 
         void xuatThongTin() const override;
 
-        int getTypeId() const override { return 2; }
 };
 
 #endif
